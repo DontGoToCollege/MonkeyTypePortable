@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monkeytype Portable</title>
+<link rel="icon" href="images/icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <div class="logo" data-nav="test" title="start test">
+      <div class="logoIcon"><span class="fa">&#xf11c;</span></div>
+      <div class="logoText"><div class="top">monkey see</div><div class="bottom">monkeytype</div></div>
+    </div>
+    <nav id="menu">
+      <button class="textButton navIcon" data-nav="test" title="start test"><span class="fa">&#xf11c;</span></button>
+      <button class="textButton navIcon" data-nav="stats" title="stats &amp; history"><span class="fa">&#xf521;</span></button>
+      <button class="textButton navIcon" data-nav="about" title="about"><span class="fa">&#xf129;</span></button>
+      <button class="textButton navIcon" data-nav="settings" title="settings"><span class="fa">&#xf013;</span></button>
+    </nav>
+    <div class="spacer"></div>
+    <div id="offlineBadge" title="Everything runs locally - no internet needed"><span class="fa">&#xf023;</span> offline</div>
+  </header>
+
+  <main>
+    <!-- ======================= TEST PAGE ======================= -->
+    <section class="page active" id="pageTest">
+      <div id="testConfig">
+        <div class="row" id="puncNumGroup">
+          <button class="textButton" data-config="punctuation"><span class="fa">&#xf1fa;</span>punctuation</button>
+          <button class="textButton" data-config="numbers"><span class="fa">&#xf292;</span>numbers</button>
+        </div>
+        <div class="row" id="zenSpacer"></div>
+        <div class="spacer" id="leftSpacer"></div>
+        <div class="row" id="modeGroup">
+          <button class="textButton" data-mode="time"><span class="fa">&#xf017;</span>time</button>
+          <button class="textButton" data-mode="words"><span class="fa">&#xf031;</span>words</button>
+          <button class="textButton" data-mode="quote"><span class="fa">&#xf10d;</span>quote</button>
+          <button class="textButton" data-mode="zen"><span class="fa">&#xf6fc;</span>zen</button>
+          <button class="textButton" data-mode="custom"><span class="fa">&#xf0ad;</span>custom</button>
+        </div>
+        <div class="spacer" id="rightSpacer"></div>
+        <div class="row subGroup" id="timeGroup">
+          <button class="textButton" data-time="15">15</button>
+          <button class="textButton" data-time="30">30</button>
+          <button class="textButton" data-time="60">60</button>
+          <button class="textButton" data-time="120">120</button>
+          <button class="textButton" data-time="custom" title="custom"><span class="fa">&#xf7d9;</span></button>
+        </div>
+        <div class="row subGroup" id="wordsGroup">
+          <button class="textButton" data-words="10">10</button>
+          <button class="textButton" data-words="25">25</button>
+          <button class="textButton" data-words="50">50</button>
+          <button class="textButton" data-words="100">100</button>
+          <button class="textButton" data-words="custom" title="custom"><span class="fa">&#xf7d9;</span></button>
+        </div>
+        <div class="row subGroup" id="quoteGroup">
+          <button class="textButton" data-quote="all">all</button>
+          <button class="textButton" data-quote="0">short</button>
+          <button class="textButton" data-quote="1">medium</button>
+          <button class="textButton" data-quote="2">long</button>
+          <button class="textButton" data-quote="3">thicc</button>
+        </div>
+        <div class="row subGroup" id="customGroup">
+          <button class="textButton" id="customTextButton">change</button>
+        </div>
+      </div>
+
+      <div id="typingTest">
+        <button class="textButton" id="languageButton"><span class="fa">&#xf0ac;</span><span id="languageName">english</span></button>
+        <div id="testModesNotice"></div>
+        <div id="liveStatsMini"><span id="miniTimer"></span><span id="miniSpeed"></span><span id="miniAcc"></span><span id="miniBurst"></span></div>
+        <div id="timerBar"><div></div></div>
+        <div id="wordsWrapper">
+          <input id="wordsInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" tabindex="0" aria-label="typing input">
+          <div id="caret" class="default"></div>
+          <div id="paceCaret" class="default hidden"></div>
+          <div id="words"></div>
+          <div id="outOfFocusWarning"><span class="fa">&#xf245;</span>Click here or press any key to focus</div>
+        </div>
+        <div id="capsWarning" class="hidden"><span class="fa">&#xf023;</span>Caps Lock</div>
+        <button class="textButton" id="restartTestButton" title="restart test"><span class="fa">&#xf01e;</span></button>
+      </div>
+
+      <!-- result -->
+      <div id="result" class="hidden">
+        <div class="stats">
+          <div class="group wpm"><div class="top">wpm</div><div class="bottom" id="resWpm">-</div></div>
+          <div class="group acc"><div class="top">acc</div><div class="bottom" id="resAcc">-</div></div>
+        </div>
+        <div class="chart"><canvas id="resultChart"></canvas><div id="chartTooltip" class="hidden"></div></div>
+        <div class="morestats">
+          <div class="group testType"><div class="top">test type</div><div class="bottom" id="resType"></div></div>
+          <div class="group"><div class="top">raw</div><div class="bottom" id="resRaw"></div></div>
+          <div class="group"><div class="top" title="correct / incorrect / extra / missed">characters</div><div class="bottom" id="resChars"></div></div>
+          <div class="group"><div class="top">consistency</div><div class="bottom" id="resCons"></div></div>
+          <div class="group"><div class="top">time</div><div class="bottom" id="resTime"></div></div>
+          <div class="group source hidden"><div class="top">source</div><div class="bottom" id="resSource"></div></div>
+          <div class="group info"><div class="top">other</div><div class="bottom" id="resInfo"></div></div>
+        </div>
+        <div class="bottom buttons">
+          <button class="textButton" id="nextTestButton" title="next test"><span class="fa">&#xf054;</span></button>
+          <button class="textButton" id="repeatTestButton" title="repeat test"><span class="fa">&#xf01e;</span></button>
+          <button class="textButton" id="showWordHistoryButton" title="toggle words history"><span class="fa">&#xf03a;</span></button>
+          <button class="textButton" id="practiseWordsButton" title="practise missed words"><span class="fa">&#xf05b;</span></button>
+        </div>
+        <div id="resultWordsHistory" class="hidden"><div class="heading">input history</div><div class="words"></div></div>
+      </div>
+    </section>
+
+    <!-- ======================= STATS PAGE ======================= -->
+    <section class="page" id="pageStats"></section>
+
+    <!-- ======================= SETTINGS PAGE ======================= -->
+    <section class="page" id="pageSettings"></section>
+
+    <!-- ======================= ABOUT PAGE ======================= -->
+    <section class="page" id="pageAbout"></section>
+  </main>
+
+  <footer id="bottom">
+    <div class="keyTips">
+      <kbd>tab</kbd> + <kbd>enter</kbd> - restart test<br>
+      <kbd>esc</kbd> or <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>p</kbd> - command line
+    </div>
+    <div class="leftright">
+      <div class="left">
+        <span class="fa">&#xf023;</span> fully offline &middot; data stays on this device
+      </div>
+      <div class="right">
+        <button class="textButton" id="footerThemeButton"><span class="fa">&#xf53f;</span><span id="footerThemeName">serika dark</span></button>
+        <span class="version">v<span id="appVersion"></span></span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- command line -->
+<div id="commandLineWrapper" class="hidden">
+  <div id="commandLine">
+    <div class="searchRow"><span class="fa">&#xf002;</span><input id="commandInput" type="text" placeholder="Search..." autocomplete="off" spellcheck="false"></div>
+    <div id="commandList"></div>
+  </div>
+</div>
+
+<!-- generic modal -->
+<div id="modalWrapper" class="hidden"><div id="modal"></div></div>
+
+<!-- notifications -->
+<div id="notifications"></div>
+
+<script src="data/themes.js"></script>
+<script src="data/languages.js"></script>
+<script src="data/quotes-english.js"></script>
+<script src="js/core.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/words.js"></script>
+<script src="js/test.js"></script>
+<script src="js/result.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/commandline.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>MonkeyType</AssemblyName>
+    <RootNamespace>MonkeyTypePortable</RootNamespace>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>1.0.0</Version>
+    <Product>Monkeytype Portable</Product>
+    <Description>Offline, portable recreation of the monkeytype typing test</Description>
+    <Copyright>Personal recreation; monkeytype data GPL-3.0 (Miodec and contributors)</Copyright>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+  </ItemGroup>
+
+  <!-- The whole web app is embedded and served from a private virtual host (see WebAssets.cs). -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\web\**\*" LogicalName="web/%(RecursiveDir)%(Filename)%(Extension)" />
+    <Resource Include="app.ico" />
+  </ItemGroup>
+
+</Project>
